@@ -1,26 +1,25 @@
 <!doctype html>
-<html lang="en" ng-app="phonecatApp">
+<html lang="en" ng-app="socialblendApp">
 <head>
   <meta charset="utf-8">
-  <title>Google Phone Gallery</title>
+  <title>Twitter and instagram Top Post list</title>
+ 
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/bootstrap.css">
+  
   <script src="js/angular.min.js"></script>
   
-</head>
-
-
-
-
-  <script>
-  'use strict';
+  
+  
+<script type="text/javascript">
+'use strict';
 
 /* Controllers */
 
-var phonecatApp = angular.module('phonecatApp', []);
+var socialblendApp = angular.module('socialblendApp', []);
 
-phonecatApp.controller('PhoneListCtrl', function($scope) {
-	$scope.phones = [
+socialblendApp.controller('PostListCtrl', function($scope) {
+	$scope.posts = [
 					{'url': 'http://insta/test',
 					 'text': 'look at my lunch!',
 					 'id': 1},
@@ -38,15 +37,20 @@ phonecatApp.controller('PhoneListCtrl', function($scope) {
 	
   $scope.orderProp = 'age';
 });
-  </script>
+</script>
   
+</head>
 
 
-<body ng-controller="PhoneListCtrl">
+
+
+
+<body ng-controller="PostListCtrl">
 
   <div class="container-fluid">
     <div class="row-fluid">
       <div class="span2">
+      
         <!--Sidebar content-->
 
         Search: <input ng-model="query">
@@ -61,9 +65,9 @@ phonecatApp.controller('PhoneListCtrl', function($scope) {
         <!--Body content-->
 
         <ul class="phones">
-          <li ng-repeat="phone in phones | filter:query">
-            {{phone.text}}
-            <p>{{phone.url}}</p>
+          <li ng-repeat="post in posts | filter:query">
+            {{post.text}}
+            <p>{{post.url}}</p>
           </li>
         </ul>
 
