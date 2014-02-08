@@ -7,17 +7,43 @@
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/bootstrap.css">
   
-  <script src="lib/angular/angular.js"></script>
-  <script src="lib/angular/angular-resource.js"></script>
+  <script src="lib/angular-1.1.5/angular.js"></script>
+  <script src="lib/angular-1.1.5/angular-resource.js"></script>
   
   
   
 <script type="text/javascript">
+
 'use strict';
 
 /* Controllers */
 
 var socialblendApp = angular.module('socialblendApp', ['ngResource']);
+
+
+socialblendApp.config(['$httpProvider', function ($httpProvider) {
+   $httpProvider.defaults.useXDomain = true;
+   $httpProvider.defaults.headers.common = {};
+   $httpProvider.defaults.headers.post = {};
+   $httpProvider.defaults.headers.put = {};
+   $httpProvider.defaults.headers.patch = {};
+   
+   delete $httpProvider.defaults.headers.common['X-Requested-With'];
+   
+   
+   /*
+   // for angular post 1.2
+   $sceDelegateProvider.resourceUrlWhitelist([
+		// Allow same origin resource loads.
+		'self',
+		// Allow loading from our assets domain. Notice the difference between * and **.
+		'https://*.twitter/**']);
+		
+ 	*/
+    
+	socialblendApp.$httpProvider = $httpProvider;
+}]); 
+
 
 socialblendApp.controller('PostListCtrl', function($scope, twitter, Number) {
 	$scope.posts = [
@@ -62,21 +88,22 @@ socialblendApp.factory('twitter', function ($resource, $http) {
 
     // Twitters OAuth service endpoint
     var twitterOauthEndpoint = $http.post(
-        'https://api.twitter.com/oauth2/token'
-        , "grant_type=client_credentials"
-        , {headers: {'Authorization':
-        	'Basic ' + credentials,
-        	'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'}}
+    	  'https://api.twitter.com/oauth2/token',
+    	  // "http://localhost:8080/foo",
+    	  "grant_type=client_credentials",
+        {headers: {'Authorization': 'Basic ' + credentials,
+        			 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'}}
     );
 
     twitterOauthEndpoint.success(function (response) {
+    	console.log("*** got: " + response);
         // a successful response will return
         // the "bearer" token which is registered
         // to the $httpProvider
         socialblendApp.$httpProvider.defaults.headers.common['Authorization'] = "Bearer " + response.access_token;
-		}).error(function (response) {
+		}).error(function (response, status, headers) {
           // error handling to some meaningful extent
-          console.log("*** Error! ***: " + response);
+          console.log("*** Error! ***: " + response + "\n***Status: " + status);
    	});
 
     var r = $resource('https://api.twitter.com/1.1/search/:action',
@@ -88,8 +115,6 @@ socialblendApp.factory('twitter', function ($resource, $http) {
         });
 
     return r;
-}).config(function ($httpProvider) {
-   socialblendApp.$httpProvider = $httpProvider;
 });
 
 
