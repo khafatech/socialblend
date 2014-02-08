@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/bootstrap.css">
   
-  <script src="js/angular.min.js"></script>
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular/angular-resource.js"></script>
   
   
   
@@ -16,9 +17,9 @@
 
 /* Controllers */
 
-var socialblendApp = angular.module('socialblendApp', []);
+var socialblendApp = angular.module('socialblendApp', ['ngResource']);
 
-socialblendApp.controller('PostListCtrl', function($scope) {
+socialblendApp.controller('PostListCtrl', function($scope, twitter, Number) {
 	$scope.posts = [
 					{'url': 'http://insta/test',
 					 'text': 'look at my lunch!',
@@ -34,9 +35,67 @@ socialblendApp.controller('PostListCtrl', function($scope) {
 					 'id': 3},
 					 
 					];
+	// get save 
+	// $scope.prop = twitter.get("dogs");
+	
+	console.log("number: " + Number);
+	
+	
 	
   $scope.orderProp = 'age';
 });
+
+socialblendApp.factory('Number', function() {
+	return 42;
+});
+
+
+// http://docs.angularjs.org/api/ngResource
+
+
+socialblendApp.factory('twitter', function ($resource, $http) {
+    var consumerKey = encodeURIComponent('1767875934-ZeNewyyLfKi5XMQmJvadSB7tCqruCVcZss5gdhw');
+    var consumerSecret = encodeURIComponent('NPpI3a7UOJqDPfTVKmEiPAbM7IcX6QulKNrpbJEHHweaE');
+    var credentials = btoa(consumerKey + ':' + consumerSecret);
+    
+    console.log("b64 credentials: " + credentials);
+
+    // Twitters OAuth service endpoint
+    var twitterOauthEndpoint = $http.post(
+        'https://api.twitter.com/oauth2/token'
+        , "grant_type=client_credentials"
+        , {headers: {'Authorization':
+        	'Basic ' + credentials,
+        	'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'}}
+    );
+
+    twitterOauthEndpoint.success(function (response) {
+        // a successful response will return
+        // the "bearer" token which is registered
+        // to the $httpProvider
+        socialblendApp.$httpProvider.defaults.headers.common['Authorization'] = "Bearer " + response.access_token;
+		}).error(function (response) {
+          // error handling to some meaningful extent
+          console.log("*** Error! ***: " + response);
+   	});
+
+    var r = $resource('https://api.twitter.com/1.1/search/:action',
+        {action: 'tweets.json',
+            count: 10,
+        },
+        {
+         paginate: {method: 'GET'}
+        });
+
+    return r;
+}).config(function ($httpProvider) {
+   socialblendApp.$httpProvider = $httpProvider;
+});
+
+
+
+
+
 </script>
   
 </head>
