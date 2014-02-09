@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<link href="style1.css" rel="stylesheet" type="text/css" />
+	<link href='http://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>
+	
+	<title>Welcome to socialblend!</title>
+	<!-- Load JQuery -->
+	    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	    <!-- Load jquery.cookie plugin (optional) -->
+	    <script type="text/javascript" src="jquery.cookie.js"></script>
+	    <!-- Load jquery.navgoco plugin js and css files -->
+	    <script type="text/javascript" src="src/jquery.navgoco.js"></script>
+	    <link rel="stylesheet" href="jquery.navgoco.css" type="text/css" media="screen" />
+		<!-- Add jQuery to your website if you don't have it already -->
+		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	
+	
+		    <link rel="stylesheet" href="bootstrap.css" type="text/css" media="screen"/>
+	
+		
+		<script src="js/angular.min.js"></script>
+		<script src="js/controller.js"></script>
+		
+		
+		
+		<script>
+		$("#dropdown").on("click", function(e){
+		  e.preventDefault();
+  
+		  if($(this).hasClass("open")) {
+		    $(this).removeClass("open");
+		    $(this).children("ul").slideUp("fast");
+		  } else {
+		    $(this).addClass("open");
+		    $(this).children("ul").slideDown("fast");
+		  }
+		});
+		</script>
+
+</head>
+
+
+<body ng-app="socialblendApp" ng-controller="PostListCtrl">
+
+<div id="wrapper">
+	<header>
+		<!--Start Navigation-->
+		<div id="topnav">
+					<section class=search>
+						<div id="tfheader">
+						
+						
+						
+								<!--
+								<form id="tfnewsearch" method="get" action="http://www.google.com">
+								        <input type="text" id="tfq2b" class="tftextinput2" name="q" size="21" maxlength="120" value="search socialblend"><input type="submit" value=">" class="tfbutton2">
+								</form> -->
+								
+<form ng-submit="doSearch(input)">
+
+		    <input ng-model="input" id="tfnewsearch" class="tftextinput2" placeholder="Search for tags">
+		    <br />
+		    <!-- <select ng-model="orderProp">
+		      <option value="text">Alphabetical</option>
+		      <option value="created">Newest</option>
+		    </select> -->
+		    <input type="submit" value=">" class="tfbutton2">
+		    
+</form>
+ 	<!-- <button ng-click="searchInstaPopular()">Load more!</button> -->
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+								<div class="tfclear"></div>
+							</div>
+							
+							<input type="checkbox" ng-model="useImgur">
+							
+					</section>
+					<section id="dropdown" class="ddmenu">
+					      <img src="images/gear.png" alt="gear" />adamscotth settings
+					      <ul>
+					        <li><a href="#">my profile</a></li>
+							<li><a href="#">edit blend</a></li>
+					        <li><a href="#">account settings</a></li>
+					        <li><a href="#">support</a></li>
+					        <li><a href="#">log out</a></li>
+					      </ul>
+				  		<script>
+				  		$("#dropdown").on("click", function(e){
+				  		  e.preventDefault();
+
+				  		  if($(this).hasClass("open")) {
+				  		    $(this).removeClass("open");
+				  		    $(this).children("ul").slideUp("fast");
+				  		  } else {
+				  		    $(this).addClass("open");
+				  		    $(this).children("ul").slideDown("fast");
+				  		  }
+				  		});
+				  		</script>
+					    </section>
+					<section class=trending>
+						<p>Trending in Art:</p>
+						<p>#powwowhawaii</p>
+						<p>#MOMA</p>
+						<p>#urbanart</p>
+						<p>#artsdistrictLA</p>
+					</section>
+		</div>
+			<div id="sidebar">
+				<nav>
+					<img src="images/socialblend-logo-400w.png" alt="logo"/>
+						<section class="ac-container">
+								
+								<div>
+									<input id="ac-3" name="accordion-1" type="checkbox" />
+									<label for="ac-3" id="work_label">categories <img src="images/downarrow.png"></label>
+											<p><a ng-click="doSearchCategory($event)" href="#" class="current">Art</a></p>
+											<p><a ng-click="doSearchCategory($event)" href="#">Design</a></p>
+											<p><a ng-click="doSearchCategory($event)" href="#">Fashion</a></p>
+											<p><a ng-click="doSearchCategory($event)" href="#">Film</a></p>
+											<p><a ng-click="doSearchCategory($event)" href="#">Fitness</a></p>
+											<p><a ng-click="doSearchCategory($event)" href="#">Cars</a></p>
+											<p><a ng-click="doSearchCategory($event)" href="#">News</a></p>
+											<p><a ng-click="doSearchCategory($event)" href="#">Photography</a></p>
+											<p><a ng-click="doSearchCategory($event)" href="#">Sports</a></p>
+						
+								</div>
+							</section>
+							<section id="icons">
+								<img src="images/twitter.png" />
+								<img src="images/pinterest.png" />
+								<img src="images/facebook.png"/>
+								<img src="images/tumblr.png"/>
+								<img src="images/instagram.png"/>
+								
+							</section>
+						</nav>
+						
+					</div>	
+					
+		<!--End Navigation-->
+	</header>
+	<!--Start Scrolling Hero-->
+	
+	<div id="body">
+		<div id="contentcontainer">
+			<!-- TODO change class -->
+			<div class="instagram" ng-repeat="post in posts | orderBy:orderProp">
+				<a href="{{post.url}}"><img ng-show="post.pic" ng-src="{{post.pic}}"></a>
+				{{post.text}}
+			</div>
+		</div>
+	</div>
+	<!--End Scrolling Hero-->
+
+</body>

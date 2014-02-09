@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" ng-app="socialblendApp">
+<head>
+  <meta charset="utf-8">
+  <title>Twitter and instagram Top Post list</title>
+ 
+  <!-- <link rel="stylesheet" href="css/app.css"> -->
+  <!--<link rel="stylesheet" href="css/bootstrap.css"> -->
+  
+  <script src="lib/jquery/jquery-1.10.2.min.js"></script>
+  
+  
+  
+<script type="text/javascript">
+
+var ajax_result;
+
+var ACCESS_TOKEN = "1077730514.1fb234f.d79420046077461ba15d089825b12b56";
+
+function process_insta_results(data) {
+	var result = [];
+	
+	for (var i=0; i < data.data.length; i++) {
+		post = data.data[i];
+		var normalized_post = {};
+		normalized_post.url = post.link;
+		if (post.caption)
+			normalized_post.text = post.caption.text;
+		else
+			normalized_post.text = "No caption. Just look!";
+		normalized_post.pic =  post.images.low_resolution.url;
+		normalized_post.created = post.created_time;
+		result.push(normalized_post);
+	}
+	return result;
+}
+
+var processed;
+var posts = [
+				{'url': 'http://insta/test',
+				 'text': 'look at my lunch!',
+				 'id': 1},
+				 
+				{'url': 'http://insta/test2',
+				 'text': 'look at my dinner!',
+				 'id': 2},
+				 
+				 
+				{'url': 'http://twitter/test2',
+				 'text': 'I farted!',
+				 'id': 3},
+				];
+
+
+
+function get_insta_posts(count="") {
+
+	// query insta
+	var count = 5;
+	var url= "https://api.instagram.com/v1/media/popular?count=" + count + "&access_token=" + ACCESS_TOKEN;
+	
+	console.log("url: " + url);
+	$.ajax({
+	   type: 'GET',
+		url: url,
+		async: false,
+		contentType: "application/json",
+		dataType: 'jsonp',
+		success: function(json) {
+		   console.log("get_insta_popular success! Got ");
+		   $scope.instaPosts = json;
+		   ajax_result = json;
+		   processed = process_insta_results(json);
+		   $scope.posts = $scope.posts.concat(processed);
+		   // update model
+		},
+		error: function(e) {
+		   console.log(e.message);
+		}
+	});
+
+
+}
+	
+
+</script>
+  
+</head>
+
+
+
+
+
+<body ng-controller="PostListCtrl">
+
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span2">
+      
+        <!--Sidebar content-->
+
+        Search: <input ng-model="query">
+        Sort by:
+        <select >
+          <option value="name">Alphabetical</option>
+          <option value="age">Newest</option>
+        </select>
+
+      </div>
+      
+      
+      <div class="span10">
+        <!--Body content-->
+
+        <ul class="phones">
+          <li ng-repeat="post in posts | filter:query">
+            {{post.text}}
+            <p>{{post.url}}</p>
+            <img ng-show="post.pic" src="{{post.pic}}">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
