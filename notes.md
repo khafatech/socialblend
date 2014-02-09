@@ -55,9 +55,6 @@ e.g:
 * keys:
 	https://apps.twitter.com/app/5783716/keys
 
-Access token 1767875934-ZeNewyyLfKi5XMQmJvadSB7tCqruCVcZss5gdhw
-Access token secret NPpI3a7UOJqDPfTVKmEiPAbM7IcX6QulKNrpbJEHHweaE 
-
 
 
 
@@ -87,10 +84,11 @@ access_token=1077730514.1fb234f.d79420046077461ba15d089825b12b56
 	https://api.instagram.com/v1/tags/cats/media/recent?q=cats&count=10&access_token=1077730514.1fb234f.d79420046077461ba15d089825b12b56
 
 
-https://api.instagram.com/v1/tags/search?q=snowy&access_token=
+- https://api.instagram.com/v1/tags/search?q=snowy&access_token=
 
-## https://api.instagram.com/v1/tags/cats/media/recent?q=cats&count=10&access_token=1077730514.1fb234f.d79420046077461ba15d089825b12b56
-##Popular Media: https://api.instagram.com/v1/media/popular?access_token=1077730514.1fb234f.d79420046077461ba15d089825b12b56 
+- https://api.instagram.com/v1/tags/cats/media/recent?q=cats&count=10&access_token=1077730514.1fb234f.d79420046077461ba15d089825b12b56
+
+- Popular Media: https://api.instagram.com/v1/media/popular?access_token=1077730514.1fb234f.d79420046077461ba15d089825b12b56 
 
 
 
@@ -102,11 +100,7 @@ https://api.instagram.com/v1/tags/search?q=snowy&access_token=
 
 ## Imgur
 
-- client secret
-	5678b2cffd7f20fcee5364d0564fc74c3a578061
-	
-- client id
-	e16b276cda07433
+
 
 https://api.imgur.com/3/gallery/r/funny/top/0
 

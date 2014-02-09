@@ -6,9 +6,12 @@ var socialblendApp = angular.module('socialblendApp', []);
 
 
 var ajax_result;
-var ACCESS_TOKEN = "1077730514.1fb234f.d79420046077461ba15d089825b12b56";
 
+var ACCESS_TOKEN = "<instagram access token here>";
+var IMGUR_CLIENTID = "<imgur client id here>";
 
+var TWITTER_SECRET;
+var TWITTER_KEY;
 
 function process_insta_results(data) {
 	var result = [];
@@ -33,6 +36,8 @@ var processed;
 var imgur_response;
 
 socialblendApp.controller('PostListCtrl', function($scope, $http) {
+
+	$scope.useImgur = false;
 
 	$scope.doSearch = function(input) {
 		console.log("*** input: " + input);
@@ -125,7 +130,7 @@ socialblendApp.controller('PostListCtrl', function($scope, $http) {
 	
     var imgurReq = $http.get(
     	 	'https://api.imgur.com/3/gallery/r/funny/top/0',
-        	{headers: {'Authorization': 'Client-ID ' + 'e16b276cda07433'}}
+        	{headers: {'Authorization': 'Client-ID ' + IMGUR_CLIENTID}}
 		).success(function (response) {
 				console.log("*** imgur got: " + response);
 				imgur_response = response;
@@ -140,7 +145,7 @@ socialblendApp.controller('PostListCtrl', function($scope, $http) {
 	
 	/////////// init ///////////////
 	
-	$scope.searchInstaPopular(5);
+	// $scope.searchInstaPopular(5);
 	
 	// FIXME
 	$scope.orderProp = 'age';
@@ -186,8 +191,8 @@ socialblendApp.factory('Number', function() {
 
 // http://docs.angularjs.org/api/ngResource
 socialblendApp.factory('twitter', function ($resource, $http) {
-    var consumerKey = encodeURIComponent('1767875934-ZeNewyyLfKi5XMQmJvadSB7tCqruCVcZss5gdhw');
-    var consumerSecret = encodeURIComponent('NPpI3a7UOJqDPfTVKmEiPAbM7IcX6QulKNrpbJEHHweaE');
+    var consumerKey = encodeURIComponent(TWITTER_KEY);
+    var consumerSecret = encodeURIComponent(TWITTER_SECRET);
     var credentials = btoa(consumerKey + ':' + consumerSecret);
     
     console.log("b64 credentials: " + credentials);
