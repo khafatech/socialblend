@@ -76,7 +76,16 @@ Access token secret NPpI3a7UOJqDPfTVKmEiPAbM7IcX6QulKNrpbJEHHweaE
 
 
 ## Instagram api
-## https://api.instagram.com/v1/tags/cats/media/recent?q=cats&count=10&access_token=1077730514.1fb234f.d79420046077461ba15d089825b12b56
+
+
+access_token=1077730514.1fb234f.d79420046077461ba15d089825b12b56
+
+
+* Queries:
+
+
+- cats
+	https://api.instagram.com/v1/tags/cats/media/recent?q=cats&count=10&access_token=1077730514.1fb234f.d79420046077461ba15d089825b12b56
 
 ### Getting a list
 

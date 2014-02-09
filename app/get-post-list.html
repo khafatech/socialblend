@@ -4,130 +4,16 @@
   <meta charset="utf-8">
   <title>Twitter and instagram Top Post list</title>
  
-  <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="css/bootstrap.css">
-  
-  <script src="lib/angular-1.1.5/angular.js"></script>
-  <script src="lib/angular-1.1.5/angular-resource.js"></script>
+  <!-- <link rel="stylesheet" href="css/app.css"> -->
+  <!--<link rel="stylesheet" href="css/bootstrap.css"> -->
   
   
-  
-<script type="text/javascript">
+  <script src="lib/jquery/jquery-1.10.2.min.js"></script>
 
-'use strict';
-
-/* Controllers */
-
-var socialblendApp = angular.module('socialblendApp', ['ngResource']);
-
-
-socialblendApp.config(['$httpProvider', function ($httpProvider) {
-   $httpProvider.defaults.useXDomain = true;
-   $httpProvider.defaults.headers.common = {};
-   $httpProvider.defaults.headers.post = {};
-   $httpProvider.defaults.headers.put = {};
-   $httpProvider.defaults.headers.patch = {};
-   
-   delete $httpProvider.defaults.headers.common['X-Requested-With'];
-   
-   
-   /*
-   // for angular post 1.2
-   $sceDelegateProvider.resourceUrlWhitelist([
-		// Allow same origin resource loads.
-		'self',
-		// Allow loading from our assets domain. Notice the difference between * and **.
-		'https://*.twitter/**']);
-		
- 	*/
-    
-	socialblendApp.$httpProvider = $httpProvider;
-}]); 
-
-
-socialblendApp.controller('PostListCtrl', function($scope, twitter, Number) {
-	$scope.posts = [
-					{'url': 'http://insta/test',
-					 'text': 'look at my lunch!',
-					 'id': 1},
-					 
-					{'url': 'http://insta/test2',
-					 'text': 'look at my dinner!',
-					 'id': 2},
-					 
-					 
-					{'url': 'http://twitter/test2',
-					 'text': 'I farted!',
-					 'id': 3},
-					 
-					];
-	// get save 
-	// $scope.prop = twitter.get("dogs");
-	
-	console.log("number: " + Number);
-	
-	
-	
-  $scope.orderProp = 'age';
-});
-
-socialblendApp.factory('Number', function() {
-	return 42;
-});
-
-
-// http://docs.angularjs.org/api/ngResource
-
-
-socialblendApp.factory('twitter', function ($resource, $http) {
-    var consumerKey = encodeURIComponent('1767875934-ZeNewyyLfKi5XMQmJvadSB7tCqruCVcZss5gdhw');
-    var consumerSecret = encodeURIComponent('NPpI3a7UOJqDPfTVKmEiPAbM7IcX6QulKNrpbJEHHweaE');
-    var credentials = btoa(consumerKey + ':' + consumerSecret);
-    
-    console.log("b64 credentials: " + credentials);
-
-    // Twitters OAuth service endpoint
-    var twitterOauthEndpoint = $http.post(
-    	  'https://api.twitter.com/oauth2/token',
-    	  // "http://localhost:8080/foo",
-    	  "grant_type=client_credentials",
-        {headers: {'Authorization': 'Basic ' + credentials,
-        			 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'}}
-    );
-
-    twitterOauthEndpoint.success(function (response) {
-    	console.log("*** got: " + response);
-        // a successful response will return
-        // the "bearer" token which is registered
-        // to the $httpProvider
-        socialblendApp.$httpProvider.defaults.headers.common['Authorization'] = "Bearer " + response.access_token;
-		}).error(function (response, status, headers) {
-          // error handling to some meaningful extent
-          console.log("*** Error! ***: " + response + "\n***Status: " + status);
-   	});
-
-    var r = $resource('https://api.twitter.com/1.1/search/:action',
-        {action: 'tweets.json',
-            count: 10,
-        },
-        {
-         paginate: {method: 'GET'}
-        });
-
-    return r;
-});
-
-
-
-
-
-</script>
+<script src="lib/angular/angular.js"></script>
+  <script src="js/controller.js"></script>
   
 </head>
-
-
-
-
 
 <body ng-controller="PostListCtrl">
 
@@ -137,24 +23,27 @@ socialblendApp.factory('twitter', function ($resource, $http) {
       
         <!--Sidebar content-->
 
-        Search: <input ng-model="query">
-        Sort by:
+        Search: <input id="tag-serach-input" type="text" placeholder="Search for tags">
+
+        Sort by: (doesn't work) <br />
         <select ng-model="orderProp">
           <option value="name">Alphabetical</option>
           <option value="age">Newest</option>
         </select>
 
       </div>
+      
+      
       <div class="span10">
         <!--Body content-->
 
         <ul class="phones">
-          <li ng-repeat="post in posts | filter:query">
+          <li ng-repeat="post in posts">
             {{post.text}}
             <p>{{post.url}}</p>
+            <img ng-show="post.pic" src="{{post.pic}}">
           </li>
         </ul>
-
       </div>
     </div>
   </div>
