@@ -30,13 +30,17 @@ function process_insta_results(data) {
 
 var processed;
 
-socialblendApp.controller('PostListCtrl', function($scope) {
+var imgur_response;
+
+socialblendApp.controller('PostListCtrl', function($scope, $http) {
 
 	$scope.doSearch = function(input) {
 		console.log("*** input: " + input);
-		
 		$scope.searchInstaByTag(input);
-		
+	}
+	
+	$scope.doSearchCategory = function($event) {
+		$scope.searchInstaByTag($event.target.innerHTML);
 	}
 
 	$scope.posts = [
@@ -115,6 +119,33 @@ socialblendApp.controller('PostListCtrl', function($scope) {
 		});
 	}
 	
+	
+	
+	////// imgur ///////////
+	
+    var imgurReq = $http.get(
+    	 	'https://api.imgur.com/3/gallery/r/funny/top/0',
+        	{headers: {'Authorization': 'Client-ID ' + 'e16b276cda07433'}}
+		).success(function (response) {
+				console.log("*** imgur got: " + response);
+				imgur_response = response;
+			
+		}).error(function (response, status, headers) {
+		      console.log("*** imgur Error! ***: " + response + "\n***Status: " + status);
+   	});
+	
+	
+	
+	
+	
+	/////////// init ///////////////
+	
+	$scope.searchInstaPopular(5);
+	
+	// FIXME
+	$scope.orderProp = 'age';
+	
+	
 	 // = $scope.posts.concat(processed);
 	
 	/*
@@ -126,9 +157,6 @@ socialblendApp.controller('PostListCtrl', function($scope) {
 		});
 		
 	*/
-	
-
-
 
 	/*
     var instaReq = $http({method: 'GET', url: 'https://api.instagram.com/v1/tags/cats/media/recent?q=cats&count=1&access_token=1077730514.1fb234f.d79420046077461ba15d089825b12b56'});
@@ -145,21 +173,10 @@ socialblendApp.controller('PostListCtrl', function($scope) {
 
 	*/
 	
-	
-  $scope.orderProp = 'age';
-}).config(['$httpProvider', function ($httpProvider) {
 
-	// didn't work :(
-	$httpProvider.defaults.useXDomain = true;
-	$httpProvider.defaults.headers.common = {};
-	$httpProvider.defaults.headers.post = {};
-	$httpProvider.defaults.headers.put = {};
-	$httpProvider.defaults.headers.patch = {};
-	delete $httpProvider.defaults.headers.common['X-Requested-With'];
+});
 
 
-	socialblendApp.$httpProvider = $httpProvider;
-}]);
 
 socialblendApp.factory('Number', function() {
 	return 42;
