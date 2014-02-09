@@ -8,10 +8,10 @@
   <!--<link rel="stylesheet" href="css/bootstrap.css"> -->
   
   
-  <script src="lib/jquery/jquery-1.10.2.min.js"></script>
+	<script src="lib/jquery/jquery-1.10.2.min.js"></script>
 
-<script src="lib/angular/angular.js"></script>
-  <script src="js/controller.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/controller.js"></script>
   
 </head>
 
@@ -22,22 +22,28 @@
       <div class="span2">
       
         <!--Sidebar content-->
+        
+        <form ng-submit="doSearch(input)">
 
-        Search: <input id="tag-serach-input" type="text" placeholder="Search for tags">
-
-        Sort by: (doesn't work) <br />
-        <select ng-model="orderProp">
-          <option value="name">Alphabetical</option>
-          <option value="age">Newest</option>
-        </select>
+		    Search: <input ng-model="input" id="tag-serach-input" placeholder="Search for tags">
+		    Sort by: (doesn't work) <br />
+		    <select ng-model="orderProp">
+		      <option value="name">Alphabetical</option>
+		      <option value="age">Newest</option>
+		    </select>
+		    
+		    <input type="submit">
+		    
+        </form>
+        
+        <button ng-click="searchInstaPopular()">Load more!</button>
 
       </div>
-      
       
       <div class="span10">
         <!--Body content-->
 
-        <ul class="phones">
+        <ul>
           <li ng-repeat="post in posts">
             {{post.text}}
             <p>{{post.url}}</p>
