@@ -1,42 +1,31 @@
 <!DOCTYPE html>
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-	<link href="style1.css" rel="stylesheet" type="text/css" />
+	<link href="css/blendboard.css" rel="stylesheet" type="text/css" />
 	<link href='http://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>
 	
 	<title>Welcome to socialblend!</title>
+
 	<!-- Load JQuery -->
-	    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-	    <!-- Load jquery.cookie plugin (optional) -->
-	    <script type="text/javascript" src="jquery.cookie.js"></script>
-	    <!-- Load jquery.navgoco plugin js and css files -->
-	    <script type="text/javascript" src="src/jquery.navgoco.js"></script>
-	    <link rel="stylesheet" href="jquery.navgoco.css" type="text/css" media="screen" />
-		<!-- Add jQuery to your website if you don't have it already -->
-		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-	
-	
-		    <link rel="stylesheet" href="bootstrap.css" type="text/css" media="screen"/>
-	
-		
-		<script src="js/angular.min.js"></script>
-		<script src="js/controller.js"></script>
-		
-		
-		
-		<script>
-		$("#dropdown").on("click", function(e){
-		  e.preventDefault();
-  
-		  if($(this).hasClass("open")) {
-		    $(this).removeClass("open");
-		    $(this).children("ul").slideUp("fast");
-		  } else {
-		    $(this).addClass("open");
-		    $(this).children("ul").slideDown("fast");
-		  }
-		});
-		</script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    
+    <!-- load angular application code -->
+    <script src="js/angular.min.js"></script>
+    <script src="js/controller.js"></script>
+    
+    <script>
+    $("#dropdown").on("click", function(e){
+      e.preventDefault();
+
+      if($(this).hasClass("open")) {
+        $(this).removeClass("open");
+        $(this).children("ul").slideUp("fast");
+      } else {
+        $(this).addClass("open");
+        $(this).children("ul").slideDown("fast");
+      }
+    });
+    </script>
 
 </head>
 

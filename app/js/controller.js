@@ -1,15 +1,25 @@
+/* controller.js
+
+  Mustafa Khafateh
+ 
+
+  Initially created at the Cal Poly Design & Dev Hackathon, Feb 8, 2014
 
 
-/* Controllers */
+
+  Licenced under GLP3
+ */
+
+
+
+/* Controller to get post lists from instagram and imgur */
 
 var socialblendApp = angular.module('socialblendApp', []);
 
-
 var ajax_result;
 
-var ACCESS_TOKEN = "<instagram access token here>";
+var INSTAGRAM_ACCESS_TOKEN = '1077730514.1fb234f.d79420046077461ba15d089825b12b56';
 var IMGUR_CLIENTID = "<imgur client id here>";
-
 var TWITTER_SECRET;
 var TWITTER_KEY;
 
@@ -73,11 +83,13 @@ socialblendApp.controller('PostListCtrl', function($scope, $http) {
 	
 	$scope.searchInstaByTag = function(tag="art", count=5) {
 		// query insta
-		var url= "https://api.instagram.com/v1/tags/" + tag + "/media/recent?count=" + count + "&access_token=" + ACCESS_TOKEN;
+		var url= "https://api.instagram.com/v1/tags/" + tag +
+            "/media/recent?count=" + count + "&access_token=" +
+            INSTAGRAM_ACCESS_TOKEN;
 	
 		console.log("url: " + url);
 		$.ajax({
-		   type: 'GET',
+		    type: 'GET',
 			url: url,
 			async: false,
 			contentType: "application/json",
@@ -100,7 +112,8 @@ socialblendApp.controller('PostListCtrl', function($scope, $http) {
 
 	$scope.searchInstaPopular = function(count=3) {
 		// query insta
-		var url= "https://api.instagram.com/v1/media/popular?count=" + count + "&access_token=" + ACCESS_TOKEN;
+		var url= "https://api.instagram.com/v1/media/popular?count=" + count +
+            "&access_token=" + INSTAGRAM_ACCESS_TOKEN;
 	
 		console.log("url: " + url);
 		$.ajax({
@@ -123,11 +136,13 @@ socialblendApp.controller('PostListCtrl', function($scope, $http) {
 			}
 		});
 	}
-	
-	
+
+    $scope.searchInstaPopular(5);
 	
 	////// imgur ///////////
-	
+
+    /*
+    // wokrs
     var imgurReq = $http.get(
     	 	'https://api.imgur.com/3/gallery/r/funny/top/0',
         	{headers: {'Authorization': 'Client-ID ' + IMGUR_CLIENTID}}
@@ -138,10 +153,8 @@ socialblendApp.controller('PostListCtrl', function($scope, $http) {
 		}).error(function (response, status, headers) {
 		      console.log("*** imgur Error! ***: " + response + "\n***Status: " + status);
    	});
-	
-	
-	
-	
+
+    */
 	
 	/////////// init ///////////////
 	
@@ -188,8 +201,8 @@ socialblendApp.factory('Number', function() {
 });
 
 
-
-// http://docs.angularjs.org/api/ngResource
+// from http://beautifulbytes.wordpress.com/2013/06/18/oauth2-with-angularjs-to-access-twitter/
+// didn't work. Sends OPTION to twitter even after adding CORS headers in angular
 socialblendApp.factory('twitter', function ($resource, $http) {
     var consumerKey = encodeURIComponent(TWITTER_KEY);
     var consumerSecret = encodeURIComponent(TWITTER_SECRET);
