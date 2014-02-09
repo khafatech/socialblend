@@ -1,5 +1,4 @@
 
-
 Web page: http://quakehead.github.io/socialblend
 
 
@@ -89,6 +88,10 @@ access_token=1077730514.1fb234f.d79420046077461ba15d089825b12b56
 
 
 https://api.instagram.com/v1/tags/search?q=snowy&access_token=
+
+## https://api.instagram.com/v1/tags/cats/media/recent?q=cats&count=10&access_token=1077730514.1fb234f.d79420046077461ba15d089825b12b56
+##Popular Media: https://api.instagram.com/v1/media/popular?access_token=1077730514.1fb234f.d79420046077461ba15d089825b12b56 
+
 
 
 ### Getting a list
